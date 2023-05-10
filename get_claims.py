@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 
-def fetch_google_patent_claims(patent_links):
+def fetch_claims_from_gp(patent_links):
     claims_data = []
 
     for link in patent_links:
@@ -21,20 +21,3 @@ def fetch_google_patent_claims(patent_links):
             print(f"Error fetching patent from {link}: {e}")
 
     return claims_data
-
-# Sample list of Google Patents link
-path = "C:\\Users\\westw\\Documents\\Project\\patent_search_helper\\gp-search-telsa.csv"
-
-df_raw = pd.read_csv(path, skiprows=1)
-
-patent_links = df_raw['result link'].to_numpy()
-
-# Fetch the claims data
-claims_data = fetch_google_patent_claims(patent_links)
-
-# Create a pandas DataFrame
-claims_df = pd.DataFrame(claims_data, columns=['Patent Link', 'Patent Number', 'Claims'])
-
-print(claims_df)
-
-claims_df.to_csv("patent_db.csv", index=False)
